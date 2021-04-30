@@ -45,3 +45,10 @@
 }
 
 /* Your Code Below */
+#solution-input {
+  outline: none;
+}
+
+#solution-input.error {
+  border: 1px solid red;
+}
