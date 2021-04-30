@@ -58,11 +58,11 @@ const startClock = () => {
   clockInterval = setInterval(updateSecondsLeft, CLOCK_INVOKE_INTERVAL)
 }
 
-const generateRandomInt = function(max) {
+const generateRandomInt = (max) => {
   return Math.floor(Math.random() * max)
 }
 
-const generateEquation = function() {
+const generateEquation = () => {
   num1 = generateRandomInt(10)
   num2 = generateRandomInt(10)
   answer = num1 + num2
