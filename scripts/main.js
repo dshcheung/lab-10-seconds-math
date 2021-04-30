@@ -85,7 +85,7 @@ const handleInput = () => {
 }
 
 const init = () => {
-  $solution.on('keyup', handleInput)
+  $solution.on('input', handleInput)
   $restartButton.on('click', restart)
 
   restart()
