@@ -71,36 +71,22 @@ const startClock = () => {
   clockInterval = setInterval(updateSecondsLeft, CLOCK_INVOKE_INTERVAL)
 }
 
-const generateRandomInt = (max) => {
-  return Math.floor(Math.random() * max)
+const generateRandomInt = () => {
+  return Math.floor(Math.random() * settings.maxNum)
+}
+
+const generateRandomOperator = () => {
+
 }
 
 const generateEquation = () => {
-  num1 = generateRandomInt(10)
-  num2 = generateRandomInt(10)
+  num1 = generateRandomInt()
+  num2 = generateRandomInt()
+  operator = generateRandomOperator()
   answer = num1 + num2
 
   $num1.text(num1)
   $num2.text(num2)
-}
-
-const handleInput = () => {
-  if (!clockInterval) startClock()
-
-  if (Number($solution.val()) === answer) {
-    points += 5
-    timeLeft += REWARD_MS
-    $solution.val('').removeClass('error')
-    generateEquation()
-  } else {
-    $solution.addClass('error')
-  }
-}
-
-const displaySettings = () => {
-  const { maxNum } = settings
-
-  $maxNumber.text(maxNum)
 }
 
 const handleSettingsChange = () => {
@@ -114,7 +100,21 @@ const handleSettingsChange = () => {
     root: false
   }
 
-  displaySettings()
+  $maxNumber.text(settings.maxNum)
+  generateEquation()
+}
+
+const handleInput = () => {
+  if (!clockInterval) startClock()
+
+  if (Number($solution.val()) === answer) {
+    points += 5
+    timeLeft += REWARD_MS
+    $solution.val('').removeClass('error')
+    generateEquation()
+  } else {
+    $solution.addClass('error')
+  }
 }
 
 const init = () => {
