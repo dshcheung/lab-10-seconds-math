@@ -4,6 +4,9 @@ const $secondsLeft = $('#secondsLeft')
 const $num1 = $('#num1')
 const $num2 = $('#num2')
 const $solution = $('#solution-input')
+const $settings = $('#settings')
+const $maxNumber = $('#max-number')
+const $numberSetting = $('#number-setting')
 
 // Gameover Box Elem
 const $gameOverBox = $('#game-over-box')
@@ -20,6 +23,15 @@ const CLOCK_INVOKE_INTERVAL = 100
 // Others Global
 let clockInterval, prevTime, timeLeft
 let points, answer, num1, num2
+let settings = {
+  maxNum: 10,
+  add: true,
+  sub: false,
+  mult: false,
+  div: false,
+  power: false,
+  root: false
+}
 
 const gameOver = () => {
   clearInterval(clockInterval)
@@ -85,7 +97,28 @@ const handleInput = () => {
   }
 }
 
+const displaySettings = () => {
+  const { maxNum } = settings
+
+  $maxNumber.text(maxNum)
+}
+
+const handleSettingsChange = () => {
+  settings = {
+    maxNum: Number($numberSetting.val()),
+    add: true,
+    sub: false,
+    mult: false,
+    div: false,
+    power: false,
+    root: false
+  }
+
+  displaySettings()
+}
+
 const init = () => {
+  $settings.on('input', handleSettingsChange)
   $solution.on('input', handleInput)
   $restartButton.on('click', restart)
 
