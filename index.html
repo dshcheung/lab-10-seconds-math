@@ -31,7 +31,7 @@
 
       <p id="equation">
         <span id="num1"></span>
-        +
+        <span id="operator">+</span>
         <span id="num2"></span>
       </p>
 
@@ -43,7 +43,27 @@
           <input id="number-setting" type="range" class="form-control-range" min="10" max="100" step="10" value="10">
         </div>
 
+        <div class="col-10 offset-1 col-sm-6 offset-sm-3">
+          <div class="form-check form-check-inline">
+            <input id="add-setting" class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label" for="add-setting">Add +</label>
+          </div>
 
+          <div class="form-check form-check-inline">
+            <input id="sub-setting" class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="sub-setting">Subtract -</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input id="mult-setting" class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="mult-setting">Multiply *</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input id="power-setting" class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="power-setting">Power ^</label>
+          </div>
+        </div>
       </div>
     </form>
   </div>
