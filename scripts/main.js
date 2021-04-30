@@ -3,7 +3,7 @@ const $answerBox = $('#answer-box')
 const $secondsLeft = $('#secondsLeft')
 const $num1 = $('#num1')
 const $num2 = $('#num2')
-const $operator = $('#operator')
+const $operatorSymbol = $('#operator-symbol')
 const $solution = $('#solution-input')
 const $settings = $('#settings')
 const $maxNumber = $('#max-number')
@@ -24,12 +24,22 @@ const INIT_MS = INIT_SECONDS * 1000
 const REWARD_SECONDS = 10
 const REWARD_MS = REWARD_SECONDS * 1000
 const CLOCK_INVOKE_INTERVAL = 100
+const OPERATOR_SYMBOL = {
+  add: '+',
+  sub: '-',
+  mult: '*'
+}
+const REWARD_POINTS = {
+  add: 1,
+  sub: 2,
+  mult: 5
+}
 
 // Time
 let clockInterval, prevTime, timeLeft
 
 // Points & Question & Answer
-let points, answer, num1, num2
+let points, answer, num1, num2, operator
 
 // Settings
 let settings = {
@@ -37,14 +47,7 @@ let settings = {
   operators: {
     add: true,
     sub: false,
-    mult: false,
-    power: false
-  },
-  symbols: {
-    add: '+',
-    sub: '-',
-    mult: '*',
-    power: '**'
+    mult: false
   }
 }
 
@@ -93,9 +96,8 @@ const generateRandomInt = (max) => {
 const generateRandomOperator = () => {
   const availableOperators = Object.keys(settings.operators)
   const enabledOperators = availableOperators.filter(key => settings.operators[key])
-  const randomOperator = enabledOperators[generateRandomInt(enabledOperators.length - 0.01)]
 
-  return settings.symbols[randomOperator]
+  return enabledOperators[generateRandomInt(enabledOperators.length - 0.01)]
 }
 
 const generateEquation = () => {
@@ -103,7 +105,8 @@ const generateEquation = () => {
   num2 = generateRandomInt(settings.maxNum)
   operator = generateRandomOperator()
 
-  switch (operator) {
+  const symbol = OPERATOR_SYMBOL[operator]
+  switch (symbol) {
     case '+':
       answer = num1 + num2
       break
@@ -113,19 +116,15 @@ const generateEquation = () => {
     case '*':
       answer = num1 * num2
       break
-    case '^':
-      answer = num1 ** num2
-      break
   }
 
   $num1.text(num1)
   $num2.text(num2)
-  $operator.text(operator)
+  $operatorSymbol.text(symbol)
 }
 
 const handleSettingsChange = () => {
   settings = {
-    ...settings,
     maxNum: Number($numberSetting.val()),
     operators: {
       add: $addSetting.is(':checked'),
@@ -143,7 +142,7 @@ const handleInput = () => {
   if (!clockInterval) startClock()
 
   if (Number($solution.val()) === answer) {
-    points += 5
+    points += REWARD_POINTS[operator]
     timeLeft += REWARD_MS
     $solution.val('').removeClass('error')
     generateEquation()
