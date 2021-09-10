@@ -31,6 +31,7 @@ const gameOver = () => {
 }
 
 const restart = () => {
+  clockInterval = null
   points = 0
   $score.text('')
   $gameOverBox.hide()
